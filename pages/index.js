@@ -27,6 +27,26 @@ export default function Home({ todosData }) {
     }
   };
 
+  const editTodoItem = async (todo) => {
+    const newTodoText = prompt('Enter new todo text or description:');
+    if (newTodoText != null) {
+      const result = await axios.put(
+        'http://localhost:3000/api/todo/' + todo._id,
+        {
+          todoText: newTodoText,
+        }
+      );
+      const moddedTodos = todos.map((_todo) => {
+        if (_todo._id === todo._id) {
+          return result?.data.data;
+        } else {
+          return _todo;
+        }
+      });
+      setTodos(moddedTodos);
+    }
+  };
+
   const deleteTodoItem = async (todo) => {
     if (confirm('Do you really want to delete this item?')) {
       await axios.delete('http://localhost:3000/api/todo/' + todo._id);
@@ -51,7 +71,7 @@ export default function Home({ todosData }) {
           <TodoList
             todos={todos}
             deleteTodoItem={deleteTodoItem}
-            // editTodoItem={editTodoItem}
+            editTodoItem={editTodoItem}
           />
         </main>
       )}
