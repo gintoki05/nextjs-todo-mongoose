@@ -5,7 +5,7 @@ import AddTodo from '../containers/addTodo';
 import TodoList from '../containers/todoList';
 import axios from 'axios';
 
-export default function Home({ todosData }) {
+export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [todos, setTodos] = useState([]);
 
@@ -76,15 +76,4 @@ export default function Home({ todosData }) {
       )}
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const result = await axios.get('http://localhost:3000/api/todo');
-  const todosData = result.data;
-
-  return {
-    props: {
-      todosData,
-    },
-  };
 }
