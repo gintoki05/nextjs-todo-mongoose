@@ -51,7 +51,6 @@ export default function Home({ todosData }) {
     if (confirm('Do you really want to delete this item?')) {
       await axios.delete('http://localhost:3000/api/todo/' + todo._id);
       const newTodos = todos.filter((_todo) => _todo._id !== todo._id);
-      console.log(newTodos);
       setTodos(newTodos);
     }
   };
