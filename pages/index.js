@@ -4,7 +4,7 @@ import Header from '../components/header';
 import AddTodo from '../containers/addTodo';
 import TodoList from '../containers/todoList';
 import axios from 'axios';
-import { NEXT_URL } from '../config/index';
+import { NEXT_URL } from '../config';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +31,7 @@ export default function Home() {
   const editTodoItem = async (todo) => {
     const newTodoText = prompt('Enter new todo text or description:');
     if (newTodoText != null) {
-      const result = await axios.put(`${NEXT_URL}/api/todo` + todo._id, {
+      const result = await axios.put(`${NEXT_URL}/api/todo/` + todo._id, {
         todoText: newTodoText,
       });
       const moddedTodos = todos.map((_todo) => {
@@ -47,7 +47,7 @@ export default function Home() {
 
   const deleteTodoItem = async (todo) => {
     if (confirm('Do you really want to delete this item?')) {
-      await axios.delete(`${NEXT_URL}/api/todo` + todo._id);
+      await axios.delete(`${NEXT_URL}/api/todo/` + todo._id);
       const newTodos = todos.filter((_todo) => _todo._id !== todo._id);
       setTodos(newTodos);
     }
